@@ -1,0 +1,57 @@
+never a {    /* !([] (((x%2)==1))) */
+T0_init:
+	do
+	:: atomic { (! ((((x%2)==1)))) -> assert(!(! ((((x%2)==1))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never b {    /* !([] (<> (! (((x%2)==1))))) */
+T0_init:
+	do
+	:: (! ((! (((x%2)==1))))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! ((! (((x%2)==1))))) -> goto accept_S4
+	od;
+}
+never c {    /* !([] (<> ([] (! (((x%2)==1)))))) */
+T0_init:
+	do
+	:: (! ((! (((x%2)==1))))) -> goto accept_S3
+	:: (1) -> goto T0_S3
+	:: (1) -> goto T0_init
+	od;
+accept_S3:
+	do
+	:: (1) -> goto T0_S3
+	od;
+T0_S3:
+	do
+	:: (! ((! (((x%2)==1))))) -> goto accept_S3
+	:: (1) -> goto T0_S3
+	od;
+}
+never d {    /* !([] ((y<=x))) */
+T0_init:
+	do
+	:: atomic { (! (((y<=x)))) -> assert(!(! (((y<=x))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never e {    /* !([] ((! ((y==x))) || (<> (! ((y==x)))))) */
+T0_init:
+	do
+	:: (! ((! ((y==x))))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! ((! ((y==x))))) -> goto accept_S4
+	od;
+}
